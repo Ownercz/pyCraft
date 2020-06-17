@@ -102,8 +102,9 @@ class FakeClientHandler(object):
     def handle_play_start(self):
         # Called upon entering the play state.
         self.write_packet(clientbound.play.JoinGamePacket(
-            entity_id=0, game_mode=0, dimension=0, difficulty=2, max_players=1,
-            level_type='default', reduced_debug_info=False, render_distance=9))
+            entity_id=0, game_mode=0, dimension=0, hashed_seed=12345,
+            difficulty=2, max_players=1, level_type='default',
+            reduced_debug_info=False, render_distance=9, respawn_screen=False))
 
     def handle_play_packet(self, packet):
         # Called upon each packet received after handle_play_start() returns.
@@ -422,10 +423,10 @@ class _FakeServerTest(unittest.TestCase):
     """
 
     server_version = VERSIONS[-1]
-    # The Minecraft version name that the server will support.
+    # The Minecraft version ID that the server will support.
 
     client_versions = None
-    # The set of Minecraft version names or protocol version numbers that the
+    # The set of Minecraft version IDs or protocol version numbers that the
     # client will support. If None, the client supports all possible versions.
 
     server_type = FakeServer
